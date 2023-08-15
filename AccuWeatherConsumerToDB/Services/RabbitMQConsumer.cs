@@ -1,8 +1,11 @@
 ﻿using System.Text;
 using RabbitMQ.Client.Events;
 using RabbitMQ.Client;
+using AccuWeatherConsumerToDB.Models;
+using Newtonsoft.Json;
 
 namespace AccuWeatherConsumerToDB.Services;
+
 
 public class RabbitMQConsumer
 {
@@ -49,7 +52,11 @@ public class RabbitMQConsumer
 
             string message = Encoding.UTF8.GetString(body);
 
-            Console.WriteLine($"Message received: {message}");
+            List<CurrentConditions> currentConditions = JsonConvert.DeserializeObject<List<CurrentConditions>>(message);
+
+            //Console.WriteLine($"Message received: {message}");
+
+            Console.WriteLine("Rate: " + currentConditions[0].LocalObservationDateTime);
 
             channel.BasicAck(args.DeliveryTag, false);
 

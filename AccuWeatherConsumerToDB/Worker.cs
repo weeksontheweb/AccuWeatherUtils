@@ -17,7 +17,8 @@ public class Worker : BackgroundService
         {
             RabbitMQConsumer messageQueue = new RabbitMQConsumer();
             messageQueue.ReadMessageFromQueue();
-            
+
+
             _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
             await Task.Delay(1000, stoppingToken);
         }
