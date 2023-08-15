@@ -1,6 +1,7 @@
 using AccuWeatherWorkService.Models;
+using AccuWeatherWorkService.Services;
 using Newtonsoft.Json;
-
+using AccuWeatherWorkService.Services;
 
 namespace AccuWeatherWorkService;
 
@@ -19,7 +20,8 @@ public class Worker : BackgroundService
     {
         try
         {
-                
+            RabbitMQTransfer messageQueue = new RabbitMQTransfer();
+            
             while (!stoppingToken.IsCancellationRequested)
             {
                 /*
@@ -43,6 +45,8 @@ public class Worker : BackgroundService
                     {
                         string apiResponse = await response.Content.ReadAsStringAsync(stoppingToken);
 
+                        messageQueue.AddMessageToQueue(apiResponse);
+                        
                         List<CurrentConditions> currentConditions = JsonConvert.DeserializeObject<List<CurrentConditions>>(apiResponse);
 
                         Console.WriteLine("Rate: " + currentConditions[0].LocalObservationDateTime);
