@@ -20,7 +20,7 @@ public class Worker : BackgroundService
     {
         try
         {
-            RabbitMQTransfer messageQueue = new RabbitMQTransfer();
+            RabbitMQProducer messageQueue = new RabbitMQProducer();
             
             while (!stoppingToken.IsCancellationRequested)
             {

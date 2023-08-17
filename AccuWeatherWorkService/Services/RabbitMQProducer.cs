@@ -3,14 +3,14 @@ using RabbitMQ.Client;
 
 namespace AccuWeatherWorkService.Services;
 
-public class RabbitMQTransfer
+public class RabbitMQProducer
 {
     private ConnectionFactory factory;
     private string messageQueueEndPoint;
     private string messageQueueUserName;
     private string messageQueuePassword;
     
-    public RabbitMQTransfer()
+    public RabbitMQProducer()
     {
         messageQueueEndPoint = System.Environment.GetEnvironmentVariable("RabbitMQServiceEndPoint");
         messageQueueUserName = System.Environment.GetEnvironmentVariable("RabbitMQServiceUserName");
